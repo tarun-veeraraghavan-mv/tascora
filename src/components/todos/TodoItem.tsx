@@ -52,8 +52,12 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
                 key={task.id}
                 className="bg-gray-200  rounded-lg p-1 flex justify-between align-middle"
               >
-                <p>Task name: {task.name}</p>
-                <p>Due date: {formatDate(task.dueDate)}</p>
+                <p>
+                  Task name: <br /> {task.name}
+                </p>
+                <p>
+                  Due date: <br /> {formatDate(task.dueDate)}
+                </p>
                 <Button color="danger" onClick={() => deleteTodo(task.id)}>
                   Delete
                 </Button>

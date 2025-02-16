@@ -338,3 +338,35 @@ export async function getUserExpenseForm(userId: number) {
 
   return form;
 }
+
+export async function createNewExpense(formData: FormData) {
+  const totalExpense = formData.get("totalExpense") as string;
+  const category = formData.get("category") as string;
+  const description = formData.get("description") as string;
+  const date = formData.get("date") as string;
+  const paymentMethod = formData.get("paymentMethod") as string;
+  const recieptImage = formData.get("recieptImage") as string;
+  const userId = formData.get("userId") as string;
+
+  console.log(totalExpense);
+
+  await prisma.expense.create({
+    data: {
+      totalExpense: parseInt(totalExpense),
+      category,
+      description,
+      date: new Date(date),
+      paymentMethod,
+      recieptImage,
+      userId: parseInt(userId),
+    },
+  });
+
+  revalidatePath("/main/expense-tracker");
+}
+
+export async function getExpenses() {
+  const expenses = await prisma.expense.findMany();
+
+  return expenses;
+}

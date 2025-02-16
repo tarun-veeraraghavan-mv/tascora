@@ -1,6 +1,7 @@
+import ExpenseTracker from "@/components/expense-tracker/ExpenseTracker";
 import ExpenseTrackerForm from "@/components/expense-tracker/ExpenseTrackerForm";
 import Container from "@/components/ui/Container";
-import { getUserExpenseForm } from "@/lib/actions/auth";
+import { getExpenses, getUserExpenseForm } from "@/lib/actions/auth";
 import { getUser } from "@/lib/utils/getUser";
 import { redirect } from "next/navigation";
 
@@ -16,9 +17,15 @@ export default async function Page() {
     redirect("/login");
   }
 
+  const expenses = await getExpenses();
+
   return (
     <Container>
-      {!form ? <ExpenseTrackerForm user={user} /> : <div>Your stuff</div>}
+      {!form ? (
+        <ExpenseTrackerForm user={user} />
+      ) : (
+        <ExpenseTracker form={form} user={user} expenses={expenses} />
+      )}
     </Container>
   );
 }

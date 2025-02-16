@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -22,7 +23,8 @@ model User {
   profile Profile? 
   course Course[]
   task Task[]
-  expense ExpenseTracker?
+  expenseForm ExpenseTracker?
+  expense Expense[]
 }
 
 model Profile {
@@ -78,5 +80,17 @@ model ExpenseTracker {
   haveJob Boolean @default(false)
   currentWage Int @default(0)
   userId Int @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Expense {
+  id Int @id @default(autoincrement())
+  totalExpense Int
+  category String
+  description String
+  date DateTime
+  paymentMethod String
+  recieptImage String
+  userId Int 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
