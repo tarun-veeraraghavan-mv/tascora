@@ -10,6 +10,7 @@ import {
 import { User } from "@prisma/client";
 import AddCoursePopover from "./AddCoursePopover";
 import { Dispatch, SetStateAction } from "react";
+import FileUpload from "./FileUpload";
 
 interface UserType {
   user: User;

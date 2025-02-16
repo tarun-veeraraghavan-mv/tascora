@@ -372,3 +372,25 @@ export async function getExpenses() {
 
   return expenses;
 }
+
+// FILE UPLOAD
+
+import { supabase } from "@/lib/supabase";
+
+export async function uploadFile(formData: FormData) {
+  const file = formData.get("file") as File;
+  const courseId = formData.get("courseId") as string;
+
+  const filePath = `course-files/${Date.now()}-${file.name}`;
+  const { data, error } = await supabase.storage
+    .from("courses")
+    .upload(filePath, file);
+
+  if (error) {
+    console.log(error);
+  }
+
+  await prisma.fileUpload.create({
+    data: { courseId: parseInt(courseId), fileUrl: data?.path },
+  });
+}

@@ -56,6 +56,13 @@ model Course {
   userId Int 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   task Task[] 
+  file FileUpload?
+}
+
+model FileUpload {
+  courseId Int @unique
+  course Course @relation(fields: [courseId], references: [id])
+  fileUrl String?
 }
 
 model Task {

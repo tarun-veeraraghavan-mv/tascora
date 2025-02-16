@@ -17,6 +17,7 @@ import {
 import { Course } from "@prisma/client";
 import ViewCourseModel from "./ViewCourseModel";
 import EditCoursePopover from "./EditCoursePopover";
+import FileUpload from "./FileUpload";
 
 interface CourseItemProps {
   course: Course;
@@ -88,6 +89,8 @@ export default function CourseItem({ course }: CourseItemProps) {
         <p>Course start date: </p>
 
         <p>Course difficulty: {course.difficulty}</p>
+
+        <FileUpload courseId={String(course.id)} />
       </CardBody>
       <Divider />
     </Card>
