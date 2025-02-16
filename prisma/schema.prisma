@@ -22,6 +22,7 @@ model User {
   profile Profile? 
   course Course[]
   task Task[]
+  expense ExpenseTracker?
 }
 
 model Profile {
@@ -64,5 +65,18 @@ model Task {
   completed Boolean @default(false)
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ExpenseTracker {
+  id Int @id @default(autoincrement())
+  feesPerSemester Int 
+  otherCollegeCharges Int
+  otherSpending Int
+  currentSavings Int
+  savingsGoal Int
+  haveJob Boolean @default(false)
+  currentWage Int @default(0)
+  userId Int @unique
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

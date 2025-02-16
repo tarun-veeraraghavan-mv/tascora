@@ -16,7 +16,9 @@ export default function ClientPage({ user, courses }: ClientPageProps) {
 
   const filteredCourses =
     input.length > 0
-      ? courses.filter((course) => course.name.includes(input))
+      ? courses.filter((course) =>
+          course.name.toLowerCase().includes(input.toLowerCase())
+        )
       : courses;
 
   return (

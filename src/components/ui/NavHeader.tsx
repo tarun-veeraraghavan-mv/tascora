@@ -69,6 +69,11 @@ export default function NavHeader({ user }: UserType) {
             Todo tracker
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/main/expense-tracker">
+            Expense Tracker
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent justify="end">

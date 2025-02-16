@@ -23,8 +23,11 @@ interface TodoItem {
 export default function TodoItem({ course, user, tasks }: TodoItem) {
   return (
     <div>
-      <Card className="max-w-[400px]">
-        <CardHeader className="flex gap-3 justify-between">
+      <Card>
+        <CardHeader
+          className="flex gap-3 justify-between"
+          style={{ backgroundColor: `${course.semesterColor}` }}
+        >
           <div className="flex flex-col">
             <p className="text-md">Semester {course.semesterNumber}</p>
             <p className="text-small text-default-500">{course.name}</p>
@@ -45,7 +48,10 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
           {tasks
             .filter((task) => task.courseId === course.id)
             .map((task) => (
-              <li key={task.id} className="bg-gray-200  rounded-lg p-1">
+              <li
+                key={task.id}
+                className="bg-gray-200  rounded-lg p-1 flex justify-between align-middle"
+              >
                 <p>Task name: {task.name}</p>
                 <p>Due date: {formatDate(task.dueDate)}</p>
                 <Button color="danger" onClick={() => deleteTodo(task.id)}>

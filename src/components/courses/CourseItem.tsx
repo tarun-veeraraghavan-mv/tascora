@@ -29,11 +29,11 @@ export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
 
 export default function CourseItem({ course }: CourseItemProps) {
   return (
-    <Card
-      className={`max-w-[400px] `}
-      style={{ backgroundColor: `${course.semesterColor}` }}
-    >
-      <CardHeader className="flex gap-3 justify-between">
+    <Card className={`max-w-[400px] `}>
+      <CardHeader
+        className="flex gap-3 justify-between"
+        style={{ backgroundColor: `${course.semesterColor}` }}
+      >
         <div className="flex flex-col">
           <p className="text-md">Semester {course.semesterNumber}</p>
           <p className="text-small text-default-500">{course.name}</p>

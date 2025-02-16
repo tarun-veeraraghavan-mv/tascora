@@ -289,3 +289,52 @@ export async function deleteTodo(id: number) {
 
   revalidatePath("/main/todos");
 }
+
+export async function createExpenseTrackerForm(formData: FormData) {
+  const feesPerSemester = formData.get("feesPerSemester") as string;
+  const otherCollegeCharges = formData.get("otherCollegeCharges") as string;
+  const otherSpending = formData.get("otherSpending") as string;
+  const currentSavings = formData.get("currentSavings") as string;
+  const savingsGoal = formData.get("savingsGoal") as string;
+  const haveJob = formData.get("haveJob") === "true";
+  const currentWage = formData.get("currentWage") as string;
+  const userId = formData.get("userId") as string;
+
+  console.log(
+    feesPerSemester,
+    otherCollegeCharges,
+    otherSpending,
+    currentSavings,
+    savingsGoal,
+    haveJob,
+    currentWage,
+    userId
+  );
+
+  await prisma.expenseTracker.create({
+    data: {
+      feesPerSemester: parseInt(feesPerSemester),
+      otherCollegeCharges: parseInt(otherCollegeCharges),
+      otherSpending: parseInt(otherCollegeCharges),
+      currentSavings: parseInt(currentSavings),
+      savingsGoal: parseInt(savingsGoal),
+      haveJob,
+      currentWage: haveJob
+        ? parseInt(formData.get("currentWage") as string)
+        : 0,
+      userId: parseInt(userId),
+    },
+  });
+
+  revalidatePath("/main/expense-tracker");
+}
+
+export async function getUserExpenseForm(userId: number) {
+  const form = await prisma.expenseTracker.findUnique({
+    where: { userId },
+  });
+
+  console.log(form);
+
+  return form;
+}
