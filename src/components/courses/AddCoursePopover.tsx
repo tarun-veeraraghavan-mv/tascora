@@ -9,6 +9,25 @@ interface UserType {
   user: User;
 }
 
+export const progressEl = [
+  { key: "Not Started", label: "Not Started" },
+  { key: "In progress", label: "In progress" },
+  { key: "Completed", label: "Completed" },
+];
+
+export const semesterColorEl = [
+  { key: "Red", label: "Red" },
+  { key: "Green", label: "Green" },
+  { key: "Teal", label: "Teal" },
+  { key: "Orange", label: "Orange" },
+];
+
+export const difficultyEl = [
+  { key: "Easy", label: "Easy" },
+  { key: "Medium", label: "Medium" },
+  { key: "Hard", label: "Hard" },
+];
+
 export default function AddCoursePopover({ user }: UserType) {
   return (
     <form action={createCourse}>
@@ -52,22 +71,27 @@ export default function AddCoursePopover({ user }: UserType) {
         />
         <Input type="date" label="Start date" name="startDate" />
         <Input type="date" label="End date" name="endDate" />
-        <Select label="Progress" name="progress">
-          <SelectItem value="Not started">Not started</SelectItem>
-          <SelectItem value="In progress">In progress</SelectItem>
-          <SelectItem value="Completed">Completed</SelectItem>
+        <Select label="Progress" name="progress" items={progressEl}>
+          {(progress) => (
+            <SelectItem key={progress.key}>{progress.key}</SelectItem>
+          )}
         </Select>
         <Input type="number" label="Grade" name="grade" min={0} />
-        <Select label="Semester color" name="semesterColor">
-          <SelectItem value="Red">Red</SelectItem>
-          <SelectItem value="Green">Green</SelectItem>
-          <SelectItem value="Teal">Teal</SelectItem>
-          <SelectItem value="Cyan">Cyan</SelectItem>
+        <Select
+          label="Semester color"
+          name="semesterColor"
+          items={semesterColorEl}
+        >
+          {(semesterColor) => (
+            <SelectItem key={semesterColor.key}>
+              {semesterColor.label}
+            </SelectItem>
+          )}
         </Select>
-        <Select label="Difficulty" name="difficulty">
-          <SelectItem color="success"  value="Easy">Easy</SelectItem>
-          <SelectItem color="warning" value="Medium">Medium</SelectItem>
-          <SelectItem color="danger" value="Hard">Hard</SelectItem>
+        <Select label="Difficulty" name="difficulty" items={difficultyEl}>
+          {(difficultyEl) => (
+            <SelectItem key={difficultyEl.key}>{difficultyEl.label}</SelectItem>
+          )}
         </Select>
 
         <input type="hidden" value={user?.id} name="userId" />
