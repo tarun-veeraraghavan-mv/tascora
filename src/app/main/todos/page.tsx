@@ -1,8 +1,12 @@
-import { createTaskForCourse, getTasks } from "@/lib/actions/auth";
+import { getTasks } from "@/lib/actions/auth";
 import { getAllCourses } from "@/lib/utils/getAllCourses";
 import { getUser } from "@/lib/utils/getUser";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
+import TodoItem from "./TodoItem";
+import TodoItemSkeleton from "./TodoItemSkeleton";
+import Container from "@/components/ui/Container";
+import { Divider } from "@heroui/react";
 
 export default async function page() {
   const user = await getUser();
@@ -17,33 +21,26 @@ export default async function page() {
   console.log(tasks);
 
   return (
-    <div>
-      <p>Todos damn page</p>
-      <ul>
-        {courses.map((course) => (
-          <li key={course.id}>
-            <p>{course.name}</p>
-            <form action={createTaskForCourse}>
-              <div>
-                <label>Name of task</label>
-                <input type="text" placeholder="Name" name="name" />
-              </div>
-              <div>
-                <label>Due date</label>
-                <input type="date" name="dueDate" />
-                <input type="hidden" value={user.id} name="userId" />
-                <input name="courseId" value={course.id} type="hidden" />
-              </div>
-              <button>CReate task</button>
-            </form>
-            {tasks
-              .filter((task) => task.courseId === course.id)
-              .map((task) => (
-                <div key={task.id}>{task.name}</div>
-              ))}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container>
+      <div className="py-4">
+        <h2 className="text-3xl font-bold">All of your todos</h2>
+      </div>
+
+      <Divider />
+
+      <Suspense fallback={<TodoItemSkeleton />}>
+        {new Promise((res) => setTimeout(res, 2000))}
+        <ul className="grid grid-cols-3 gap-3 py-4">
+          {courses.map((course) => (
+            <TodoItem
+              key={course.id}
+              course={course}
+              user={user}
+              tasks={tasks}
+            />
+          ))}
+        </ul>
+      </Suspense>
+    </Container>
   );
 }

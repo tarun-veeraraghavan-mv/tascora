@@ -16,10 +16,11 @@ export const progressEl = [
 ];
 
 export const semesterColorEl = [
-  { key: "Red", label: "Red" },
-  { key: "Green", label: "Green" },
-  { key: "Teal", label: "Teal" },
-  { key: "Orange", label: "Orange" },
+  { key: "#FDA4AF", label: "Red" },
+  { key: "#F9A8D4", label: "Pink" },
+  { key: "#BEF264", label: "Green" },
+  { key: "#FDBA74", label: "Orange" },
+  { key: "#67E8F9", label: "Cyan" },
 ];
 
 export const difficultyEl = [
@@ -37,6 +38,7 @@ export default function AddCoursePopover({ user }: UserType) {
           type="text"
           label="Name"
           name="name"
+          required
           validate={(val) => {
             if (val.length < 3) {
               return "Must be atleast 3 letters long";
@@ -47,12 +49,14 @@ export default function AddCoursePopover({ user }: UserType) {
           type="number"
           label="Semester number"
           name="semesterNumber"
+          required
           min={0}
         />
         <Input
           type="text"
           label="Proffessor name"
           name="proffessorName"
+          required
           validate={(val) => {
             if (val.length < 5) {
               return "Must be atleast 5 letters long";
@@ -63,24 +67,41 @@ export default function AddCoursePopover({ user }: UserType) {
           type="text"
           label="Course description"
           name="courseDesc"
+          required
           validate={(val) => {
             if (val.length < 5) {
               return "Must be atleast 5 letters long";
             }
           }}
         />
-        <Input type="date" label="Start date" name="startDate" />
-        <Input type="date" label="End date" name="endDate" />
-        <Select label="Progress" name="progress" items={progressEl}>
+        <Input type="date" label="Start date" name="startDate" required />
+        <Input type="date" label="End date" name="endDate" required />
+        <Select
+          label="Progress"
+          name="progress"
+          items={progressEl}
+          required
+          validate={(val) => {
+            if (!val) {
+              return "Select a value";
+            }
+          }}
+        >
           {(progress) => (
             <SelectItem key={progress.key}>{progress.key}</SelectItem>
           )}
         </Select>
-        <Input type="number" label="Grade" name="grade" min={0} />
+        <Input type="number" label="Grade" name="grade" min={0} required />
         <Select
           label="Semester color"
           name="semesterColor"
           items={semesterColorEl}
+          required
+          validate={(val) => {
+            if (!val) {
+              return "Select a value";
+            }
+          }}
         >
           {(semesterColor) => (
             <SelectItem key={semesterColor.key}>
@@ -88,7 +109,17 @@ export default function AddCoursePopover({ user }: UserType) {
             </SelectItem>
           )}
         </Select>
-        <Select label="Difficulty" name="difficulty" items={difficultyEl}>
+        <Select
+          label="Difficulty"
+          name="difficulty"
+          items={difficultyEl}
+          required
+          validate={(val) => {
+            if (!val) {
+              return "Select a value";
+            }
+          }}
+        >
           {(difficultyEl) => (
             <SelectItem key={difficultyEl.key}>{difficultyEl.label}</SelectItem>
           )}

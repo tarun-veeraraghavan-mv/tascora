@@ -1,5 +1,6 @@
 "use server";
 
+import { User } from "@prisma/client";
 import { prisma } from "../prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -37,6 +38,44 @@ export async function signIn(formData: FormData) {
   });
 
   redirect("/profile");
+}
+
+export async function login(formData: FormData): Promise<void> {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const user = (await prisma.user.findUnique({
+    where: { email },
+  })) as User;
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (isPasswordValid) {
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
+
+    (await cookies()).set("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      path: "/",
+    });
+  }
+
+  redirect("/main/dashboard");
+}
+
+export async function signOut() {
+  (await cookies()).set("token", "", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(0),
+  });
+
+  redirect("/");
 }
 
 interface Decoded {
@@ -110,7 +149,7 @@ export async function createCourse(formData: FormData) {
     endDate,
     // startTime,
     // endTime,
-    progress,  // 🔴 Check this in the console
+    progress, // 🔴 Check this in the console
     grade,
     semesterColor,
     difficulty,

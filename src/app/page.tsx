@@ -12,9 +12,29 @@ export default function page() {
       <h2 className="text-3xl font-bold mb-5">Create new account!</h2>
 
       <div className="mb-5 flex gap-4 flex-col">
-        <Input type="text" name="username" label="Username" />
-        <Input name="email" label="Email" />
-        <Input type="password" name="password" label="Password" />
+        <Input
+          type="text"
+          name="username"
+          label="Username"
+          required
+          validate={(val) => {
+            if (val.length < 5) {
+              return "Name must be atleast 5 letters";
+            }
+          }}
+        />
+        <Input name="email" label="Email" required />
+        <Input
+          type="password"
+          name="password"
+          label="Password"
+          required
+          validate={(val) => {
+            if (val.length < 8) {
+              return "Password must be atleast 8 letters";
+            }
+          }}
+        />
       </div>
 
       <div className="flex gap-3">

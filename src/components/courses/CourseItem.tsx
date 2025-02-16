@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
 } from "@heroui/react";
 import { Course } from "@prisma/client";
+import ViewCourseModel from "./ViewCourseModel";
 
 interface CourseItemProps {
   course: Course;
@@ -27,24 +28,40 @@ export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
 
 export default function CourseItem({ course }: CourseItemProps) {
   return (
-    <Card className="max-w-[400px]">
+    <Card
+      className={`max-w-[400px] `}
+      style={{ backgroundColor: `${course.semesterColor}` }}
+    >
       <CardHeader className="flex gap-3 justify-between">
         <div className="flex flex-col">
           <p className="text-md">Semester 1</p>
           <p className="text-small text-default-500">{course.name}</p>
         </div>
         <div>
-          <Popover placement="right">
+          <Popover placement="bottom">
             <PopoverTrigger>
-              <Button>Option</Button>
+              <Button >Option</Button>
             </PopoverTrigger>
             <PopoverContent>
               <ListboxWrapper>
                 <Listbox>
-                  <ListboxItem>Copy course</ListboxItem>
+                  <ListboxItem>
+                    <Popover>
+                      <PopoverTrigger>
+                        <p>View course</p>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <ViewCourseModel course={course} />
+                      </PopoverContent>
+                    </Popover>
+                  </ListboxItem>
                   <ListboxItem>Edit course</ListboxItem>
                   <ListboxItem color="danger">
-                    <button onClick={() => deleteCourse(course.id)}>
+                    <button
+                      onClick={async () => {
+                        await deleteCourse(course.id);
+                      }}
+                    >
                       Delete course
                     </button>
                   </ListboxItem>
