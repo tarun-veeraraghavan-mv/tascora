@@ -2,9 +2,8 @@ import { getTasks } from "@/lib/actions/auth";
 import { getAllCourses } from "@/lib/utils/getAllCourses";
 import { getUser } from "@/lib/utils/getUser";
 import { redirect } from "next/navigation";
-import React, { Suspense } from "react";
-import TodoItem from "./TodoItem";
-import TodoItemSkeleton from "./TodoItemSkeleton";
+import React from "react";
+import TodoItem from "../../../components/todos/TodoItem";
 import Container from "@/components/ui/Container";
 import { Divider } from "@heroui/react";
 
@@ -28,19 +27,11 @@ export default async function page() {
 
       <Divider />
 
-      <Suspense fallback={<TodoItemSkeleton />}>
-        {new Promise((res) => setTimeout(res, 2000))}
-        <ul className="grid grid-cols-3 gap-3 py-4">
-          {courses.map((course) => (
-            <TodoItem
-              key={course.id}
-              course={course}
-              user={user}
-              tasks={tasks}
-            />
-          ))}
-        </ul>
-      </Suspense>
+      <ul className="grid grid-cols-3 gap-3 py-4">
+        {courses.map((course) => (
+          <TodoItem key={course.id} course={course} user={user} tasks={tasks} />
+        ))}
+      </ul>
     </Container>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "@heroui/react";
 import { Course } from "@prisma/client";
 import ViewCourseModel from "./ViewCourseModel";
+import EditCoursePopover from "./EditCoursePopover";
 
 interface CourseItemProps {
   course: Course;
@@ -34,13 +35,13 @@ export default function CourseItem({ course }: CourseItemProps) {
     >
       <CardHeader className="flex gap-3 justify-between">
         <div className="flex flex-col">
-          <p className="text-md">Semester 1</p>
+          <p className="text-md">Semester {course.semesterNumber}</p>
           <p className="text-small text-default-500">{course.name}</p>
         </div>
         <div>
           <Popover placement="bottom">
             <PopoverTrigger>
-              <Button >Option</Button>
+              <Button>Option</Button>
             </PopoverTrigger>
             <PopoverContent>
               <ListboxWrapper>
@@ -55,7 +56,14 @@ export default function CourseItem({ course }: CourseItemProps) {
                       </PopoverContent>
                     </Popover>
                   </ListboxItem>
-                  <ListboxItem>Edit course</ListboxItem>
+                  <ListboxItem>
+                    <Popover>
+                      <PopoverTrigger>Edit course</PopoverTrigger>
+                      <PopoverContent>
+                        <EditCoursePopover course={course} />
+                      </PopoverContent>
+                    </Popover>
+                  </ListboxItem>
                   <ListboxItem color="danger">
                     <button
                       onClick={async () => {

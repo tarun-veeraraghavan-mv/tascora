@@ -180,6 +180,62 @@ export async function createCourse(formData: FormData) {
   revalidatePath("/main/courses");
 }
 
+export async function updateCourse(formData: FormData) {
+  const name = formData.get("name") as string;
+  const semesterNumber = formData.get("semesterNumber") as string;
+  const proffessorName = formData.get("proffessorName") as string;
+  const courseDesc = formData.get("courseDesc") as string;
+  const startDate = formData.get("startDate") as string;
+  const endDate = formData.get("endDate") as string;
+  // const startTime = formData.get("startTime") as string;
+  // const endTime = formData.get("endTime") as string;
+  const progress = formData.get("progress") as string;
+  const grade = formData.get("grade") as string;
+  const semesterColor = formData.get("semesterColor") as string;
+  const difficulty = formData.get("difficulty") as string;
+  const userId = formData.get("userId") as string;
+  const courseId = formData.get("courseId") as string;
+
+  console.log({
+    name,
+    semesterNumber,
+    proffessorName,
+    courseDesc,
+    startDate,
+    endDate,
+    // startTime,
+    // endTime,
+    progress, // 🔴 Check this in the console
+    grade,
+    semesterColor,
+    difficulty,
+    userId,
+  });
+
+  const newStartDate = new Date(startDate);
+  const newEndDate = new Date(endDate);
+
+  await prisma.course.update({
+    where: { id: parseInt(courseId) },
+    data: {
+      semesterNumber: parseInt(semesterNumber),
+      name,
+      proffessorName,
+      courseDesc,
+      startDate: newStartDate,
+      endDate: newEndDate,
+      // startTime,
+      // endTime,
+      progress,
+      grade: parseInt(grade),
+      semesterColor,
+      difficulty,
+    },
+  });
+
+  revalidatePath("/main/courses");
+}
+
 export async function getCourseForUser(id: number) {
   const courses = await prisma.course.findMany({
     where: { userId: id },
@@ -197,8 +253,9 @@ export async function deleteCourse(id: number) {
 }
 
 export async function createTaskForCourse(formData: FormData) {
-  const dueDate = formData.get("dueDate") as string;
   const name = formData.get("name") as string;
+  const dueDate = formData.get("dueDate") as string;
+  const remarks = formData.get("remarks") as string;
   const userId = formData.get("userId") as string;
   const courseId = formData.get("courseId") as string;
 
@@ -208,6 +265,7 @@ export async function createTaskForCourse(formData: FormData) {
     data: {
       dueDate: newDate,
       name,
+      remarks,
       userId: parseInt(userId),
       courseId: parseInt(courseId),
     },
@@ -222,4 +280,12 @@ export async function getTasks(id: number) {
   });
 
   return tasks;
+}
+
+export async function deleteTodo(id: number) {
+  await prisma.task.delete({
+    where: { id },
+  });
+
+  revalidatePath("/main/todos");
 }

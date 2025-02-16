@@ -1,13 +1,6 @@
-"use client";
-
-import { createCourse } from "@/lib/actions/auth";
+import { updateCourse } from "@/lib/actions/auth";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
-import { User } from "@prisma/client";
-import React from "react";
-
-interface UserType {
-  user: User;
-}
+import { Course } from "@prisma/client";
 
 export const progressEl = [
   { key: "Not Started", label: "Not Started" },
@@ -29,14 +22,17 @@ export const difficultyEl = [
   { key: "Hard", label: "Hard" },
 ];
 
-export default function AddCoursePopover({ user }: UserType) {
+interface EditCoursePopoverProps {
+  course: Course;
+}
+
+export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
   return (
-    <form action={createCourse}>
-      <h3 className="text-xl font-bold mb-3"> Create your new course</h3>
+    <form action={updateCourse}>
       <div className="grid grid-cols-3 gap-3 mb-5">
         <Input
-          type="text"
           label="Name"
+          defaultValue={course.name}
           name="name"
           required
           validate={(val) => {
@@ -46,15 +42,16 @@ export default function AddCoursePopover({ user }: UserType) {
           }}
         />
         <Input
-          type="number"
           label="Semester number"
+          type="number"
+          defaultValue={String(course.semesterNumber)}
           name="semesterNumber"
           required
           min={0}
         />
         <Input
-          type="text"
           label="Proffessor name"
+          defaultValue={course.proffessorName}
           name="proffessorName"
           required
           validate={(val) => {
@@ -64,8 +61,8 @@ export default function AddCoursePopover({ user }: UserType) {
           }}
         />
         <Input
-          type="text"
           label="Course description"
+          defaultValue={course.courseDesc}
           name="courseDesc"
           required
           validate={(val) => {
@@ -74,12 +71,31 @@ export default function AddCoursePopover({ user }: UserType) {
             }
           }}
         />
-        <Input type="date" label="Start date" name="startDate" required />
-        <Input type="date" label="End date" name="endDate" required />
+        <Input
+          label="Start date"
+          type="date"
+          defaultValue={
+            course?.startDate instanceof Date
+              ? course.startDate.toISOString().split("T")[0]
+              : ""
+          }
+          name="startDate"
+          required
+        />
+        <Input
+          label="End date"
+          type="date"
+          defaultValue={
+            course?.endDate instanceof Date
+              ? course.endDate.toISOString().split("T")[0]
+              : ""
+          }
+          name="endDate"
+          required
+        />
         <Select
           label="Progress"
           name="progress"
-          items={progressEl}
           required
           validate={(val) => {
             if (!val) {
@@ -87,15 +103,20 @@ export default function AddCoursePopover({ user }: UserType) {
             }
           }}
         >
-          {(progress) => (
-            <SelectItem key={progress.key}>{progress.key}</SelectItem>
-          )}
+          {progressEl.map((progress) => (
+            <SelectItem key={progress.key}>{progress.label}</SelectItem>
+          ))}
         </Select>
-        <Input type="number" label="Grade" name="grade" min={0} required />
+        <Input
+          label="Grade"
+          type="number"
+          defaultValue={String(course.grade)}
+          name="grade"
+          required
+        />
         <Select
           label="Semester color"
           name="semesterColor"
-          items={semesterColorEl}
           required
           validate={(val) => {
             if (!val) {
@@ -103,16 +124,13 @@ export default function AddCoursePopover({ user }: UserType) {
             }
           }}
         >
-          {(semesterColor) => (
-            <SelectItem key={semesterColor.key}>
-              {semesterColor.label}
-            </SelectItem>
-          )}
+          {semesterColorEl.map((color) => (
+            <SelectItem key={color.key}>{color.label}</SelectItem>
+          ))}
         </Select>
         <Select
           label="Difficulty"
           name="difficulty"
-          items={difficultyEl}
           required
           validate={(val) => {
             if (!val) {
@@ -120,18 +138,17 @@ export default function AddCoursePopover({ user }: UserType) {
             }
           }}
         >
-          {(difficultyEl) => (
-            <SelectItem key={difficultyEl.key}>{difficultyEl.label}</SelectItem>
-          )}
+          {difficultyEl.map((difficulty) => (
+            <SelectItem key={difficulty.key}>{difficulty.label}</SelectItem>
+          ))}
         </Select>
-
-        <input type="hidden" value={user?.id} name="userId" />
+        <input type="hidden" value={course.id} name="courseId" />
       </div>
-      <div className="flex gap-3">
-        <Button type="submit" color="primary">
-          Create course
+      <div>
+        <Button color="primary" type="submit">
+          Edit course
         </Button>
-        <Button type="reset">Reset</Button>
+        <Button>Reset</Button>
       </div>
     </form>
   );

@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import { Course, Task, User } from "@prisma/client";
 import CreateTodoForm from "./CreateTodoForm";
+import { deleteTodo } from "@/lib/actions/auth";
 
 interface TodoItem {
   course: Course;
@@ -20,8 +21,6 @@ interface TodoItem {
 }
 
 export default function TodoItem({ course, user, tasks }: TodoItem) {
-  
-
   return (
     <div>
       <Card className="max-w-[400px]">
@@ -46,8 +45,12 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
           {tasks
             .filter((task) => task.courseId === course.id)
             .map((task) => (
-              <li key={task.id} className="bg-gray-300  rounded-lg">
-                {task.name}
+              <li key={task.id} className="bg-gray-200  rounded-lg p-1">
+                <p>Task name: {task.name}</p>
+                <p>Due date: {formatDate(task.dueDate)}</p>
+                <Button color="danger" onClick={() => deleteTodo(task.id)}>
+                  Delete
+                </Button>
               </li>
             ))}
         </CardBody>
@@ -55,4 +58,13 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
       </Card>
     </div>
   );
+}
+
+function formatDate(isoString: Date) {
+  const date = new Date(isoString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
