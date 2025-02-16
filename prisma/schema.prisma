@@ -61,7 +61,7 @@ model Course {
 
 model FileUpload {
   courseId Int @unique
-  course Course @relation(fields: [courseId], references: [id])
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   fileUrl String?
 }
 
