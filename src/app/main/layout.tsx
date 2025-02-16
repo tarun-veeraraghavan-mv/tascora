@@ -1,5 +1,4 @@
-
-import NavBar from "@/components/ui/NavBar";
+import NavHeader from "@/components/ui/NavHeader";
 import { getUser } from "@/lib/utils/getUser";
 import React from "react";
 
@@ -13,7 +12,7 @@ export default async function layout({
   return (
     <div>
       <div>
-        <NavBar user={user} />
+        <NavHeader user={user} />
       </div>
       <div>{children}</div>
     </div>

@@ -33,7 +33,7 @@ const menuItems = [
   "Log Out",
 ];
 
-export default function NavBar({ user }: UserType) {
+export default function NavHeader({ user }: UserType) {
   if (!user) {
     redirect("/");
   }
