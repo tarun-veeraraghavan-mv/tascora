@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String
+  email String
+  password String
+  profile Profile? 
+  course Course[]
+  task Task[]
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  dateOfBirth DateTime
+  gender String
+  location String
+  currentCollege String
+  major String
+  minor String
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Course {
+  id Int @id @default(autoincrement()) 
+  semesterNumber Int @default(1)
+  name String 
+  proffessorName String @default("")
+  courseDesc String @default("")
+  startDate DateTime @default(now())
+  endDate DateTime @default(now())
+  startTime DateTime @default(now())
+  endTime DateTime @default(now())
+  progress String @default("Not started")
+  grade Int @default(0)
+  difficulty String @default("easy")
+  semesterColor String @default("#fff")
+  userId Int 
+  user User @relation(fields: [userId], references: [id])
+  task Task[] 
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+  name String
+  dueDate DateTime
+  courseId Int
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+}
