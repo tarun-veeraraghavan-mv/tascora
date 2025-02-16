@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Chip,
   Divider,
   Listbox,
   ListboxItem,
@@ -34,7 +35,7 @@ export default function CourseItem({ course }: CourseItemProps) {
         className="flex gap-3 justify-between"
         style={{ backgroundColor: `${course.semesterColor}` }}
       >
-        <div className="flex flex-col">
+        <div>
           <p className="text-md">Semester {course.semesterNumber}</p>
           <p className="text-small text-default-500">{course.name}</p>
         </div>
@@ -81,13 +82,40 @@ export default function CourseItem({ course }: CourseItemProps) {
       </CardHeader>
       <Divider />
       <CardBody>
+        <CourseProgress courseProgress={course.progress} />
         <p>Proffessor name: {course.proffessorName}</p>
         <p>Course description: {course.courseDesc}</p>
         <p>Course start date: </p>
-        <p>Course progress: {course.progress}</p>
+
         <p>Course difficulty: {course.difficulty}</p>
       </CardBody>
       <Divider />
     </Card>
   );
+}
+
+function CourseProgress({ courseProgress }: { courseProgress: string }) {
+  if (courseProgress === "In progress") {
+    return (
+      <Chip color="warning" className="mb-2">
+        {courseProgress}
+      </Chip>
+    );
+  }
+
+  if (courseProgress === "Not Started") {
+    return (
+      <Chip color="danger" className="mb-2">
+        {courseProgress}
+      </Chip>
+    );
+  }
+
+  if (courseProgress === "Completed") {
+    return (
+      <Chip color="success" className="mb-2">
+        {courseProgress}
+      </Chip>
+    );
+  }
 }
