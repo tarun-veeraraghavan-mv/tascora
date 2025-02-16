@@ -14,7 +14,7 @@ export default async function page() {
     redirect("/login");
   }
 
-  const courses = await getAllCourses(user?.id);
+  const courses: Course[] = await getAllCourses(user?.id);
 
   return (
     <div>
@@ -23,7 +23,7 @@ export default async function page() {
       <Divider />
 
       <ul className="grid grid-cols-4 gap-3">
-        {courses.map((course: Course) => (
+        {courses.map((course) => (
           <CourseItem course={course} key={course.id} />
         ))}
       </ul>
