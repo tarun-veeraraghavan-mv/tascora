@@ -340,6 +340,7 @@ export async function getUserExpenseForm(userId: number) {
 }
 
 export async function createNewExpense(formData: FormData) {
+  const name = formData.get("name") as string;
   const totalExpense = formData.get("totalExpense") as string;
   const category = formData.get("category") as string;
   const description = formData.get("description") as string;
@@ -352,6 +353,7 @@ export async function createNewExpense(formData: FormData) {
 
   await prisma.expense.create({
     data: {
+      name,
       totalExpense: parseInt(totalExpense),
       category,
       description,

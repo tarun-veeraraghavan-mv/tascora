@@ -13,6 +13,7 @@ import {
 import { Course, Task, User } from "@prisma/client";
 import CreateTodoForm from "./CreateTodoForm";
 import { deleteTodo } from "@/lib/actions/auth";
+import { formatDate } from "@/lib/utils/formatDate";
 
 interface TodoItem {
   course: Course;
@@ -68,13 +69,4 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
       </Card>
     </div>
   );
-}
-
-function formatDate(isoString: Date) {
-  const date = new Date(isoString);
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 }

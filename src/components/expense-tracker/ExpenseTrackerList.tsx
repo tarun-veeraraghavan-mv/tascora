@@ -1,8 +1,10 @@
 "use client";
 
-import { Card, CardBody, Divider } from "@heroui/react";
 import { Expense, ExpenseTracker } from "@prisma/client";
 import React from "react";
+import ExpenseTrackerListHeader from "./ExpenseTrackerListHeader";
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
+import { formatDate } from "@/lib/utils/formatDate";
 
 interface ExpenseTrackerListProps {
   form: ExpenseTracker;
@@ -14,48 +16,35 @@ export default function ExpenseTrackerList({
   expenses,
 }: ExpenseTrackerListProps) {
   return (
-    <div className="grid grid-cols-4 gap-3 py-4">
-      <Card className="bg-red-300">
-        <CardBody>
-          <p>
-            <span className="font-bold">Total college expenses: </span>$
-            {form.feesPerSemester + form.otherCollegeCharges}
-          </p>
-        </CardBody>
-        <Divider />
-      </Card>
-      <Card className="bg-sky-300">
-        <CardBody>
-          <p>
-            <span className="font-bold">How much you spend: </span>$
-            {form.otherSpending}
-          </p>
-        </CardBody>
-        <Divider />
-      </Card>
-      <Card className="bg-green-300">
-        <CardBody>
-          <p>
-            <span className="font-bold">Your current savings: </span>$
-            {form.currentSavings}
-          </p>
-        </CardBody>
-        <Divider />
-      </Card>
-      <Card className="bg-orange-300">
-        <CardBody>
-          <p>
-            <span className="font-bold">Your weekly pay in job: </span>$
-            {form.currentWage}
-          </p>
-        </CardBody>
-        <Divider />
-      </Card>
-
+    <div>
+      <ExpenseTrackerListHeader form={form} />
       <div>
-        {expenses.map((expense) => (
-          <div key={expense.id}>{expense.description}</div>
-        ))}
+        <h3 className="text-xl font-bold">All of your previous expenses</h3>
+        <ul className="grid grid-cols-3 gap-3 py-2">
+          {expenses.map((expense) => (
+            <li key={expense.id}>
+              <Card className="p-2">
+                <CardHeader>
+                  <div className="flex flex-col">
+                    <p className="text-md">Name: {expense.name} </p>
+                    <p className="text-small text-default-500">
+                      Date: {formatDate(expense.date)}
+                    </p>
+                  </div>
+                </CardHeader>
+                <Divider />
+                <CardBody>
+                  <p></p>
+                  <p>Course name: {expense.category}</p>
+                  <p>Description: {expense.description}</p>
+                  <p>Total expense: {expense.totalExpense}</p>
+                  <p>Reciept image: {expense.recieptImage}</p>
+                  <p>Payment method: {expense.paymentMethod}</p>
+                </CardBody>
+              </Card>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

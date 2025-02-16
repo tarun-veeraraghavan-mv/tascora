@@ -85,12 +85,13 @@ model ExpenseTracker {
 
 model Expense {
   id Int @id @default(autoincrement())
+  name String @default("")
   totalExpense Int
   category String
   description String
   date DateTime
   paymentMethod String
-  recieptImage String
+  recieptImage String?
   userId Int 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

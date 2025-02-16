@@ -26,6 +26,12 @@ export default function AddExpenseForm({ user }: AddExpenseFormProps) {
     <form action={createNewExpense}>
       <div className="grid grid-cols-2 gap-3 mb-5">
         <Input
+          type="text"
+          name="name"
+          label="Name"
+          required
+        />
+        <Input
           type="number"
           name="totalExpense"
           label="Total expense"
@@ -69,7 +75,7 @@ export default function AddExpenseForm({ user }: AddExpenseFormProps) {
             }
           }}
         />
-        <Input type="text" name="recieptImage" />
+        <Input type="text" name="recieptImage" label="Reciept link"  />
 
         <input type="hidden" value={user.id} name="userId" />
       </div>
