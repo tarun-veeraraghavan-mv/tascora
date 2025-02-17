@@ -20,19 +20,6 @@ interface UserType {
   user: User | null;
 }
 
-const menuItems = [
-  "Profile",
-  "Dashboard",
-  "Activity",
-  "Analytics",
-  "System",
-  "Deployments",
-  "My Settings",
-  "Team Settings",
-  "Help & Feedback",
-  "Log Out",
-];
-
 export default function NavHeader({ user }: UserType) {
   if (!user) {
     redirect("/");
@@ -46,7 +33,7 @@ export default function NavHeader({ user }: UserType) {
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit">Taskora</p>
         </NavbarBrand>
       </NavbarContent>
 
@@ -83,23 +70,20 @@ export default function NavHeader({ user }: UserType) {
       </NavbarContent>
 
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              color={
-                index === 2
-                  ? "warning"
-                  : index === menuItems.length - 1
-                    ? "danger"
-                    : "foreground"
-              }
-              href="#"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        <NavbarMenuItem className="flex flex-col">
+          <Link className="w-full" href="/main/dashboard">
+            Dashboard
+          </Link>
+          <Link className="w-full" href="/main/courses">
+            Courses
+          </Link>
+          <Link className="w-full" href="/main/todos">
+            Todo tracker
+          </Link>
+          <Link className="w-full" href="/main/courses">
+            Expense tracker
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );

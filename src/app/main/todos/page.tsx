@@ -27,7 +27,7 @@ export default async function page() {
 
       <Divider />
 
-      <ul className="grid grid-cols-2 gap-4 py-4">
+      <ul className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 py-4">
         {courses.map((course) => (
           <TodoItem key={course.id} course={course} user={user} tasks={tasks} />
         ))}

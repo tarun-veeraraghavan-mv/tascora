@@ -30,7 +30,7 @@ export default function ClientPage({ user, courses, files }: ClientPageProps) {
 
       <Divider />
 
-      <ul className="grid grid-cols-3 gap-3 py-4">
+      <ul className="grid  sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-3 py-4">
         {filteredCourses.map((course) => (
           <CourseItem course={course} key={course.id} files={files} />
         ))}

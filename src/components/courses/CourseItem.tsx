@@ -20,6 +20,7 @@ import EditCoursePopover from "./EditCoursePopover";
 
 import ViewCourseFile from "../file-upload/ViewCourseFile";
 import FileUpload from "./FileUpload";
+import { formatDate } from "@/lib/utils/formatDate";
 
 interface CourseItemProps {
   course: Course;
@@ -78,13 +79,13 @@ export default function CourseItem({ course, files }: CourseItemProps) {
                         <p className="text-lg font-bold">
                           Are you sure you want to delete this course?
                         </p>
-                        <button
+                        <Button
                           onClick={async () => {
                             await deleteCourse(course.id);
                           }}
                         >
                           Delete course
-                        </button>
+                        </Button>
                       </PopoverContent>
                     </Popover>
                   </ListboxItem>
@@ -109,12 +110,14 @@ export default function CourseItem({ course, files }: CourseItemProps) {
       </CardHeader>
       <Divider />
       <CardBody>
-        <CourseProgress courseProgress={course.progress} />
+        <div className="flex">
+          <CourseProgress courseProgress={course.progress} />
+          <CourseDifficulty difficulty={course.difficulty} />
+        </div>
         <p>Proffessor name: {course.proffessorName}</p>
         <p>Course description: {course.courseDesc}</p>
-        <p>Course start date: </p>
-
-        <p>Course difficulty: {course.difficulty}</p>
+        <p>Course start date: {formatDate(course.startDate)}</p>
+        <p>Course grade: {course.grade}</p>
       </CardBody>
       <Divider />
     </Card>
@@ -145,4 +148,20 @@ function CourseProgress({ courseProgress }: { courseProgress: string }) {
       </Chip>
     );
   }
+}
+
+function CourseDifficulty({ difficulty }: { difficulty: string }) {
+  return (
+    <Chip
+      color={
+        difficulty === "Easy"
+          ? "success"
+          : difficulty === "Medium"
+            ? "warning"
+            : "danger"
+      }
+    >
+      {difficulty}
+    </Chip>
+  );
 }

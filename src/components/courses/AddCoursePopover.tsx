@@ -33,7 +33,7 @@ export default function AddCoursePopover({ user }: UserType) {
   return (
     <form action={createCourse}>
       <h3 className="text-xl font-bold mb-3"> Create your new course</h3>
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 mb-5">
         <Input
           type="text"
           label="Name"
