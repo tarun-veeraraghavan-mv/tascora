@@ -14,17 +14,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@heroui/react";
-import { Course, FileUpload as FileUploadType } from "@prisma/client";
+import { Course, FileUpload as FileUploadType, Link } from "@prisma/client";
 import ViewCourseModel from "./ViewCourseModel";
 import EditCoursePopover from "./EditCoursePopover";
 
-import ViewCourseFile from "../file-upload/ViewCourseFile";
-import FileUpload from "./FileUpload";
 import { formatDate } from "@/lib/utils/formatDate";
+import ManageResourcesPopover from "./ManageResourcesPopover";
 
 interface CourseItemProps {
   course: Course;
   files: FileUploadType[];
+  links: Link[];
 }
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -33,7 +33,7 @@ export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-export default function CourseItem({ course, files }: CourseItemProps) {
+export default function CourseItem({ course, files, links }: CourseItemProps) {
   console.log("COURSE ITEM FILE", files);
 
   return (
@@ -89,19 +89,6 @@ export default function CourseItem({ course, files }: CourseItemProps) {
                       </PopoverContent>
                     </Popover>
                   </ListboxItem>
-                  <ListboxItem>
-                    <Popover>
-                      <PopoverTrigger>View and upload file</PopoverTrigger>
-                      <PopoverContent>
-                        <FileUpload courseId={String(course.id)} />
-                        <Divider />
-                        <ViewCourseFile
-                          courseId={String(course.id)}
-                          files={files}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </ListboxItem>
                 </Listbox>
               </ListboxWrapper>
             </PopoverContent>
@@ -118,6 +105,19 @@ export default function CourseItem({ course, files }: CourseItemProps) {
         <p>Course description: {course.courseDesc}</p>
         <p>Course start date: {formatDate(course.startDate)}</p>
         <p>Course grade: {course.grade}</p>
+
+        <Popover>
+          <PopoverTrigger>
+            <Button>Manage resources</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <ManageResourcesPopover
+              course={course}
+              files={files}
+              links={links}
+            />
+          </PopoverContent>
+        </Popover>
       </CardBody>
       <Divider />
     </Card>

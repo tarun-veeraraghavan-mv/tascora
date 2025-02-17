@@ -28,7 +28,7 @@ export default function FileUpload({ courseId }: { courseId: string }) {
         onChange={(e) => setFile(e.target.files?.[0] || null)}
         className="text-md"
       />
-      <Button onClick={handleUpload} disabled={uploading}>
+      <Button type="submit" onClick={handleUpload} disabled={uploading}>
         {uploading ? "Uploading..." : "Upload"}
       </Button>
     </div>

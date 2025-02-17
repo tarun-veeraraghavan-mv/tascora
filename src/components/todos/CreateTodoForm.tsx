@@ -20,7 +20,7 @@ export default function CreateTodoForm({ user, course }: CreateTodoFormProps) {
   return (
     <form action={createTaskForCourse}>
       <h2 className="text-lg font-bold mb-5">Create new todo</h2>
-      <div className="grid grid-cols-2 gap-3 mb-5">
+      <div className="grid sm:grid-cols-2 gap-3 mb-5">
         <Input
           type="text"
           label="Name"

@@ -410,3 +410,27 @@ export async function viewFiles() {
 
   return files;
 }
+
+// LINKS
+
+export async function uploadLink(formData: FormData) {
+  const name = formData.get("name") as string;
+  const link = formData.get("link") as string;
+  const courseId = formData.get("courseId") as string;
+
+  await prisma.link.create({
+    data: {
+      link,
+      name,
+      courseId: parseInt(courseId),
+    },
+  });
+
+  revalidatePath("/main/courses");
+}
+
+export async function viewLink() {
+  const links = await prisma.link.findMany();
+
+  return links;
+}
