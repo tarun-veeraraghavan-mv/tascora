@@ -72,13 +72,19 @@ export default function CourseItem({ course, files }: CourseItemProps) {
                     </Popover>
                   </ListboxItem>
                   <ListboxItem color="danger">
-                    <button
-                      onClick={async () => {
-                        await deleteCourse(course.id);
-                      }}
-                    >
-                      Delete course
-                    </button>
+                    <Popover>
+                      <PopoverTrigger>Delete course</PopoverTrigger>
+                      <PopoverContent>
+                        <p className="text-lg font-bold">Are you sure you want to delete this course?</p>
+                        <button
+                          onClick={async () => {
+                            await deleteCourse(course.id);
+                          }}
+                        >
+                          Delete course
+                        </button>
+                      </PopoverContent>
+                    </Popover>
                   </ListboxItem>
                   <ListboxItem>
                     <Popover>

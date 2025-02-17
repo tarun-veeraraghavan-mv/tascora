@@ -18,8 +18,9 @@ export default function ViewCourseFile({
         ?.filter((file) => file.courseId === parseInt(courseId))
         ?.map((file) => (
           <a
-            href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/course-files/${file.fileUrl}`}
+            href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/${file.fileUrl}`}
             target="_blank"
+            download
             key={file.id}
           >
             View course file

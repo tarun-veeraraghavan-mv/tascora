@@ -385,7 +385,7 @@ export async function uploadFile(formData: FormData) {
   const file = formData.get("file") as File;
   const courseId = formData.get("courseId") as string;
 
-  const filePath = `course-files/${Date.now()}-${file.name}`;
+  const filePath = `${Date.now()}-${file.name}`;
   const { data, error } = await supabase.storage
     .from("courses")
     .upload(filePath, file);
