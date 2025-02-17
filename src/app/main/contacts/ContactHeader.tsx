@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 import React from "react";
 
-export default function ContactHeader() {
+export default function ContactHeader({ userId }: { userId: number }) {
   return (
     <div className="flex justify-between">
       <h2 className="text-3xl font-bold">Add friends and proffessors</h2>
@@ -28,6 +28,7 @@ export default function ContactHeader() {
               <Input label="Email" required name="email" />
               <Input label="Phone" required name="phone" type="phone" />
               <Input label="Birth date" required name="birthDate" type="date" />
+              <input type="hidden" value={userId} name="userId" />
             </div>
             <div>
               <Button type="submit" color="primary">

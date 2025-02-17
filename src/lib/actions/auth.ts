@@ -441,6 +441,7 @@ export async function createContact(formData: FormData) {
   const email = formData.get("email") as string;
   const phone = formData.get("phone") as string;
   const birthDate = formData.get("birthDate") as string;
+  const userId = formData.get("userId") as string;
 
   const newBirthDate = new Date(birthDate);
 
@@ -451,14 +452,17 @@ export async function createContact(formData: FormData) {
       email,
       phone,
       birthDate: newBirthDate,
+      userId: parseInt(userId),
     },
   });
 
   revalidatePath("/main/contacts");
 }
 
-export async function getContacts() {
-  const contacts = await prisma.contact.findMany();
+export async function getContacts(userId: number) {
+  const contacts = await prisma.contact.findMany({
+    where: { userId },
+  });
 
   return contacts;
 }
