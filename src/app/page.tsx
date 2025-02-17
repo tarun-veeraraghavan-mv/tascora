@@ -2,6 +2,7 @@
 
 import { signIn } from "@/lib/actions/auth";
 import { Button, Input } from "@heroui/react";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -37,12 +38,14 @@ export default function page() {
         />
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 mb-5">
         <Button type="submit" color="primary">
           Sign in
         </Button>
         <Button type="reset">Reset</Button>
       </div>
+
+      <Link href="/login">Have an account? Log in &rarr;</Link>
     </form>
   );
 }
