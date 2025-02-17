@@ -14,13 +14,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@heroui/react";
-import { Course } from "@prisma/client";
+import { Course, FileUpload as FileUploadType } from "@prisma/client";
 import ViewCourseModel from "./ViewCourseModel";
 import EditCoursePopover from "./EditCoursePopover";
+
+import ViewCourseFile from "../file-upload/ViewCourseFile";
 import FileUpload from "./FileUpload";
 
 interface CourseItemProps {
   course: Course;
+  files: FileUploadType[];
 }
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -29,7 +32,9 @@ export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-export default function CourseItem({ course }: CourseItemProps) {
+export default function CourseItem({ course, files }: CourseItemProps) {
+  console.log("COURSE ITEM FILE", files);
+
   return (
     <Card className={`max-w-[400px] `}>
       <CardHeader
@@ -75,6 +80,19 @@ export default function CourseItem({ course }: CourseItemProps) {
                       Delete course
                     </button>
                   </ListboxItem>
+                  <ListboxItem>
+                    <Popover>
+                      <PopoverTrigger>View and upload file</PopoverTrigger>
+                      <PopoverContent>
+                        <FileUpload courseId={String(course.id)} />
+                        <Divider />
+                        <ViewCourseFile
+                          courseId={String(course.id)}
+                          files={files}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </ListboxItem>
                 </Listbox>
               </ListboxWrapper>
             </PopoverContent>
@@ -89,8 +107,6 @@ export default function CourseItem({ course }: CourseItemProps) {
         <p>Course start date: </p>
 
         <p>Course difficulty: {course.difficulty}</p>
-
-        <FileUpload courseId={String(course.id)} />
       </CardBody>
       <Divider />
     </Card>

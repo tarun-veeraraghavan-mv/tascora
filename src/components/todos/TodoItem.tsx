@@ -5,6 +5,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Chip,
   Divider,
   Popover,
   PopoverContent,
@@ -51,14 +52,14 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
             .map((task) => (
               <li
                 key={task.id}
-                className="bg-gray-200  rounded-lg p-1 flex justify-between align-middle"
+                className="bg-gray-200  rounded-lg p-2  align-middle"
               >
-                <p>
-                  Task name: <br /> {task.name}
-                </p>
-                <p>
-                  Due date: <br /> {formatDate(task.dueDate)}
-                </p>
+                <ProgressChipComp progress={task.progress} />
+                <DifficultyChipComp priority={task.priority} />
+                <div className="grid grid-cols-2">
+                  <p>Task name: {task.name}</p>
+                  <p>Due date: {formatDate(task.dueDate)}</p>
+                </div>
                 <Button color="danger" onClick={() => deleteTodo(task.id)}>
                   Delete
                 </Button>
@@ -68,5 +69,37 @@ export default function TodoItem({ course, user, tasks }: TodoItem) {
         <Divider />
       </Card>
     </div>
+  );
+}
+
+function ProgressChipComp({ progress }: { progress: string }) {
+  return (
+    <Chip
+      color={
+        progress === "In progress"
+          ? "warning"
+          : progress === "Completed"
+            ? "success"
+            : "danger"
+      }
+    >
+      {progress}
+    </Chip>
+  );
+}
+
+function DifficultyChipComp({ priority }: { priority: string }) {
+  return (
+    <Chip
+      color={
+        priority === "Medium"
+          ? "warning"
+          : priority === "Low"
+            ? "success"
+            : "danger"
+      }
+    >
+      {priority}
+    </Chip>
   );
 }

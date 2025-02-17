@@ -1,8 +1,15 @@
 "use client";
 
 import { createTaskForCourse } from "@/lib/actions/auth";
-import { Button, Input } from "@heroui/react";
+import { Button, Input, Select, SelectItem } from "@heroui/react";
 import { Course, User } from "@prisma/client";
+import { progressEl } from "../courses/AddCoursePopover";
+
+export const priorityEl = [
+  { key: "Low", label: "Low" },
+  { key: "Medium", label: "Medium" },
+  { key: "High", label: "High" },
+];
 
 interface CreateTodoFormProps {
   user: User;
@@ -37,6 +44,37 @@ export default function CreateTodoForm({ user, course }: CreateTodoFormProps) {
             }
           }}
         />
+        <Select
+          label="Progress"
+          name="progress"
+          items={progressEl}
+          required
+          validate={(val) => {
+            if (!val) {
+              return "Select a value";
+            }
+          }}
+        >
+          {(progress) => (
+            <SelectItem key={progress.key}>{progress.key}</SelectItem>
+          )}
+        </Select>
+        <Select
+          label="Priority"
+          name="priority"
+          items={priorityEl}
+          required
+          validate={(val) => {
+            if (!val) {
+              return "Select a value";
+            }
+          }}
+        >
+          {(progress) => (
+            <SelectItem key={progress.key}>{progress.key}</SelectItem>
+          )}
+        </Select>
+
         <Input type="text" name="remarks" label="Any remarks?" />
 
         <input type="hidden" value={user.id} name="userId" />

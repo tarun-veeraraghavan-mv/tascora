@@ -1,4 +1,7 @@
+"use client";
+
 import { uploadFile } from "@/lib/actions/auth";
+import { Button } from "@heroui/react";
 import { useState, useTransition } from "react";
 
 export default function FileUpload({ courseId }: { courseId: string }) {
@@ -19,14 +22,15 @@ export default function FileUpload({ courseId }: { courseId: string }) {
 
   return (
     <div>
+      <h3 className="text-lg">Upload your file</h3>
       <input
         type="file"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
         className="text-md"
       />
-      <button onClick={handleUpload} disabled={uploading}>
+      <Button onClick={handleUpload} disabled={uploading}>
         {uploading ? "Uploading..." : "Upload"}
-      </button>
+      </Button>
     </div>
   );
 }

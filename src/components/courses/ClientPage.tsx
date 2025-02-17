@@ -4,15 +4,18 @@ import React, { useState } from "react";
 import CourseHeader from "./CourseHeader";
 import { Divider } from "@heroui/react";
 import CourseItem from "./CourseItem";
-import { Course, User } from "@prisma/client";
+import { Course, FileUpload, User } from "@prisma/client";
 
 interface ClientPageProps {
   user: User;
   courses: Course[];
+  files: FileUpload[];
 }
 
-export default function ClientPage({ user, courses }: ClientPageProps) {
+export default function ClientPage({ user, courses, files }: ClientPageProps) {
   const [input, setInput] = useState("");
+
+  console.log("CLIENT PAGHE FILE", files);
 
   const filteredCourses =
     input.length > 0
@@ -29,7 +32,7 @@ export default function ClientPage({ user, courses }: ClientPageProps) {
 
       <ul className="grid grid-cols-3 gap-3 py-4">
         {filteredCourses.map((course) => (
-          <CourseItem course={course} key={course.id} />
+          <CourseItem course={course} key={course.id} files={files} />
         ))}
       </ul>
     </div>

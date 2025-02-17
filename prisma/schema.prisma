@@ -56,11 +56,12 @@ model Course {
   userId Int 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   task Task[] 
-  file FileUpload?
+  file FileUpload[]
 }
 
 model FileUpload {
-  courseId Int @unique
+  id Int @id @default(autoincrement())
+  courseId Int 
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   fileUrl String?
 }
@@ -69,9 +70,11 @@ model Task {
   id Int @id @default(autoincrement())
   name String
   dueDate DateTime
-  courseId Int
+  progress String @default("In progress")
+  priority String @default("Easy")
   remarks String @default("")
   completed Boolean @default(false)
+  courseId Int
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   userId Int
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

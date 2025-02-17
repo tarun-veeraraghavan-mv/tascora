@@ -255,6 +255,8 @@ export async function deleteCourse(id: number) {
 export async function createTaskForCourse(formData: FormData) {
   const name = formData.get("name") as string;
   const dueDate = formData.get("dueDate") as string;
+  const progress = formData.get("progress") as string;
+  const priority = formData.get("priority") as string;
   const remarks = formData.get("remarks") as string;
   const userId = formData.get("userId") as string;
   const courseId = formData.get("courseId") as string;
@@ -263,8 +265,10 @@ export async function createTaskForCourse(formData: FormData) {
 
   await prisma.task.create({
     data: {
-      dueDate: newDate,
       name,
+      dueDate: newDate,
+      progress,
+      priority,
       remarks,
       userId: parseInt(userId),
       courseId: parseInt(courseId),
@@ -393,4 +397,10 @@ export async function uploadFile(formData: FormData) {
   await prisma.fileUpload.create({
     data: { courseId: parseInt(courseId), fileUrl: data?.path },
   });
+}
+
+export async function viewFiles() {
+  const files = await prisma.fileUpload.findMany();
+
+  return files;
 }
