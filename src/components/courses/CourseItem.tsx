@@ -36,7 +36,7 @@ export default function CourseItem({ course, files }: CourseItemProps) {
   console.log("COURSE ITEM FILE", files);
 
   return (
-    <Card className={`max-w-[400px] `}>
+    <Card className={`max-w-[400px] `} key={course.id}>
       <CardHeader
         className="flex gap-3 justify-between"
         style={{ backgroundColor: `${course.semesterColor}` }}
@@ -67,7 +67,7 @@ export default function CourseItem({ course, files }: CourseItemProps) {
                     <Popover>
                       <PopoverTrigger>Edit course</PopoverTrigger>
                       <PopoverContent>
-                        <EditCoursePopover course={course} />
+                        <EditCoursePopover course={course} key={course.id} />
                       </PopoverContent>
                     </Popover>
                   </ListboxItem>
@@ -75,7 +75,9 @@ export default function CourseItem({ course, files }: CourseItemProps) {
                     <Popover>
                       <PopoverTrigger>Delete course</PopoverTrigger>
                       <PopoverContent>
-                        <p className="text-lg font-bold">Are you sure you want to delete this course?</p>
+                        <p className="text-lg font-bold">
+                          Are you sure you want to delete this course?
+                        </p>
                         <button
                           onClick={async () => {
                             await deleteCourse(course.id);

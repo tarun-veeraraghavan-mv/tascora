@@ -17,14 +17,15 @@ export default function ViewCourseFile({
       {files
         ?.filter((file) => file.courseId === parseInt(courseId))
         ?.map((file) => (
-          <a
-            href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/${file.fileUrl}`}
-            target="_blank"
-            download
-            key={file.id}
-          >
-            View course file
-          </a>
+          <div key={file.id} className="block">
+            <a
+              href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/${file.fileUrl}`}
+              target="_blank"
+              download
+            >
+              {file.name}: View course file
+            </a>
+          </div>
         ))}
     </div>
   );

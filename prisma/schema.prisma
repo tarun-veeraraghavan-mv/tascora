@@ -61,9 +61,10 @@ model Course {
 
 model FileUpload {
   id Int @id @default(autoincrement())
+  name String? @default("")
+  fileUrl String?
   courseId Int 
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  fileUrl String?
 }
 
 model Task {

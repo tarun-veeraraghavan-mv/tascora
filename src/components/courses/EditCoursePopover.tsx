@@ -1,6 +1,9 @@
+"use client";
+
 import { updateCourse } from "@/lib/actions/auth";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
 import { Course } from "@prisma/client";
+import { useState } from "react";
 
 export const progressEl = [
   { key: "Not Started", label: "Not Started" },
@@ -27,6 +30,10 @@ interface EditCoursePopoverProps {
 }
 
 export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
+  const [progress, setProgress] = useState(course.progress);
+  const [semesterColor, setSemesterColor] = useState(course.semesterColor);
+  const [difficulty, setDifficulty] = useState(course.difficulty);
+
   return (
     <form action={updateCourse}>
       <div className="grid grid-cols-3 gap-3 mb-5">
@@ -97,6 +104,8 @@ export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
           label="Progress"
           name="progress"
           required
+          selectedKeys={[progress]}
+          onChange={(e) => setProgress(e.target.value as string)}
           validate={(val) => {
             if (!val) {
               return "Select a value";
@@ -104,7 +113,9 @@ export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
           }}
         >
           {progressEl.map((progress) => (
-            <SelectItem key={progress.key}>{progress.label}</SelectItem>
+            <SelectItem key={progress.key} value={progress.key}>
+              {progress.label}
+            </SelectItem>
           ))}
         </Select>
         <Input
@@ -118,6 +129,8 @@ export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
           label="Semester color"
           name="semesterColor"
           required
+          selectedKeys={[semesterColor]}
+          onChange={(e) => setSemesterColor(e.target.value as string)}
           validate={(val) => {
             if (!val) {
               return "Select a value";
@@ -125,13 +138,17 @@ export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
           }}
         >
           {semesterColorEl.map((color) => (
-            <SelectItem key={color.key}>{color.label}</SelectItem>
+            <SelectItem key={color.key} value={color.key}>
+              {color.label}
+            </SelectItem>
           ))}
         </Select>
         <Select
           label="Difficulty"
           name="difficulty"
           required
+          selectedKeys={[difficulty]}
+          onChange={(e) => setDifficulty(e.target.value as string)}
           validate={(val) => {
             if (!val) {
               return "Select a value";
@@ -139,7 +156,9 @@ export default function EditCoursePopover({ course }: EditCoursePopoverProps) {
           }}
         >
           {difficultyEl.map((difficulty) => (
-            <SelectItem key={difficulty.key}>{difficulty.label}</SelectItem>
+            <SelectItem key={difficulty.key} value={difficulty.key}>
+              {difficulty.label}
+            </SelectItem>
           ))}
         </Select>
         <input type="hidden" value={course.id} name="courseId" />
