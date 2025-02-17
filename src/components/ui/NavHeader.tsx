@@ -57,6 +57,11 @@ export default function NavHeader({ user }: UserType) {
           </Link>
         </NavbarItem>
         <NavbarItem>
+          <Link color="foreground" href="/main/contacts">
+            Contacts
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
           <Link color="foreground" href="/main/expense-tracker">
             Expense Tracker
           </Link>
@@ -82,6 +87,9 @@ export default function NavHeader({ user }: UserType) {
           </Link>
           <Link className="w-full" href="/main/courses">
             Expense tracker
+          </Link>
+          <Link className="w-full" href="/main/contacts">
+            Contacts
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>

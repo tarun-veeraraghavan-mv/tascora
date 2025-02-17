@@ -16,7 +16,7 @@ export async function signIn(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const hashedPassword = await bcrypt.hash(password, 14);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await prisma.user.create({
     data: {
@@ -433,4 +433,40 @@ export async function viewLink() {
   const links = await prisma.link.findMany();
 
   return links;
+}
+
+export async function createContact(formData: FormData) {
+  const name = formData.get("name") as string;
+  const role = formData.get("role") as string;
+  const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
+  const birthDate = formData.get("birthDate") as string;
+
+  const newBirthDate = new Date(birthDate);
+
+  await prisma.contact.create({
+    data: {
+      name,
+      role,
+      email,
+      phone,
+      birthDate: newBirthDate,
+    },
+  });
+
+  revalidatePath("/main/contacts");
+}
+
+export async function getContacts() {
+  const contacts = await prisma.contact.findMany();
+
+  return contacts;
+}
+
+export async function deleteContact(id: number) {
+  await prisma.contact.delete({
+    where: { id },
+  });
+
+  revalidatePath("/main/contacts");
 }

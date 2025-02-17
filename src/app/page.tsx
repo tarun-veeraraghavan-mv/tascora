@@ -23,8 +23,9 @@ export default function page() {
               return "Name must be atleast 5 letters";
             }
           }}
+          id="username-input"
         />
-        <Input name="email" label="Email" required />
+        <Input name="email" label="Email" required id="email-input" />
         <Input
           type="password"
           name="password"
@@ -35,11 +36,12 @@ export default function page() {
               return "Password must be atleast 8 letters";
             }
           }}
+          id="password-input"
         />
       </div>
 
       <div className="flex gap-3 mb-5">
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" id="signin-button">
           Sign in
         </Button>
         <Button type="reset">Reset</Button>

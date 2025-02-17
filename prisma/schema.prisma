@@ -25,6 +25,7 @@ model User {
   task Task[]
   expenseForm ExpenseTracker?
   expense Expense[]
+  contact Contact[]
 }
 
 model Profile {
@@ -114,4 +115,15 @@ model Expense {
   recieptImage String?
   userId Int 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id Int @id @default(autoincrement())
+  name String
+  role String
+  email String
+  phone String
+  birthDate DateTime
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
