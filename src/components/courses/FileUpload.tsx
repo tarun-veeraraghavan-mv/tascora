@@ -22,7 +22,7 @@ export default function FileUpload({ courseId }: { courseId: string }) {
 
   return (
     <div>
-      <h3 className="text-lg">Upload your file</h3>
+      <h3 className="text-lg">Upload your file (File size less than 1 MB)</h3>
       <input
         type="file"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
