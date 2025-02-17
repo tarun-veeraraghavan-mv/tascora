@@ -177,6 +177,7 @@ export async function createCourse(formData: FormData) {
     },
   });
 
+  revalidatePath("/main/dashboard");
   revalidatePath("/main/courses");
 }
 
@@ -234,6 +235,7 @@ export async function updateCourse(formData: FormData) {
   });
 
   revalidatePath("/main/courses");
+  revalidatePath("/main/dashboard");
 }
 
 export async function getCourseForUser(id: number) {
@@ -250,6 +252,7 @@ export async function deleteCourse(id: number) {
   });
 
   revalidatePath("/main/courses");
+  revalidatePath("/main/dashboard");
 }
 
 export async function createTaskForCourse(formData: FormData) {
@@ -444,6 +447,8 @@ export async function createContact(formData: FormData) {
   const userId = formData.get("userId") as string;
 
   const newBirthDate = new Date(birthDate);
+
+  console.log("Stored in redis");
 
   await prisma.contact.create({
     data: {
