@@ -10,7 +10,7 @@ interface DashboardHeader {
 
 export default function DashboardHeader({ courses }: DashboardHeader) {
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3 mb-5">
       <ul>
         <Card className="max-w-[400px]">
           <CardHeader className="bg-green-200">

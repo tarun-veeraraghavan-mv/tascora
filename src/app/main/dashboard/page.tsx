@@ -1,4 +1,5 @@
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import TaskDashboardGraph from "@/components/dashboard/TaskDashboardGraph";
 import Container from "@/components/ui/Container";
 import { getCourseForUser, getTasks } from "@/lib/actions/auth";
 import { getUser } from "@/lib/utils/getUser";
@@ -18,8 +19,10 @@ export default async function page() {
 
   return (
     <Container>
-      <div>This is a dashboard page</div>
-      <DashboardHeader courses={courses} />
+      <div className="py-4"> 
+        <DashboardHeader courses={courses} />
+        <TaskDashboardGraph tasks={tasks} />
+      </div>
     </Container>
   );
 }
