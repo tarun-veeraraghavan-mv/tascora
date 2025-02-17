@@ -397,6 +397,8 @@ export async function uploadFile(formData: FormData) {
   await prisma.fileUpload.create({
     data: { courseId: parseInt(courseId), fileUrl: data?.path },
   });
+
+  revalidatePath("/main/courses");
 }
 
 export async function viewFiles() {

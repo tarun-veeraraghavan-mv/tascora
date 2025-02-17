@@ -20,7 +20,6 @@ export default function ViewCourseFile({
           <a
             href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/course-files/${file.fileUrl}`}
             target="_blank"
-            download="1739748087837-Frame%201.png"
             key={file.id}
           >
             View course file

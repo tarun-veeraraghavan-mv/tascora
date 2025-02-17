@@ -2,6 +2,7 @@
 
 import { login } from "@/lib/actions/auth";
 import { Button, Input } from "@heroui/react";
+import Link from "next/link";
 import React from "react";
 import { useFormStatus } from "react-dom";
 
@@ -20,6 +21,8 @@ export default function page() {
       <div>
         <FormButton />
       </div>
+
+      <Link href='/login'>Have an account? Log in &rarr;</Link>
     </form>
   );
 }
