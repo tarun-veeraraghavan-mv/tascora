@@ -1,3 +1,6 @@
+"use client";
+
+import { deleteFile } from "@/lib/actions/auth";
 import { FileUpload } from "@prisma/client";
 
 interface ViewCourseFileProps {
@@ -17,14 +20,21 @@ export default function ViewCourseFile({
       {files
         ?.filter((file) => file.courseId === parseInt(courseId))
         ?.map((file) => (
-          <div key={file.id} className="block">
+          <div key={file.id} className="flex justify-between">
             <a
               href={`https://emgpuifemogjyllulvyp.supabase.co/storage/v1/object/public/courses/${file.fileUrl}`}
               target="_blank"
               download
             >
-              {file.name}: View course file
+              {file.name}: <span className="underline">View course file</span>
             </a>
+
+            <button
+              className="text-red-500 text-md"
+              onClick={() => deleteFile(file.id)}
+            >
+              Delete
+            </button>
           </div>
         ))}
     </div>

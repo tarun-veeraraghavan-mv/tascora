@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadLink } from "@/lib/actions/auth";
+import { deleteLink, uploadLink } from "@/lib/actions/auth";
 import { Button, Divider, Input } from "@heroui/react";
 import { Link } from "@prisma/client";
 import React from "react";
@@ -32,11 +32,20 @@ export default function LInkUploadComp({
       {links
         ?.filter((link) => link.courseId === parseInt(courseId))
         .map((link, index) => (
-          <div className="block" key={link.id}>
-            {index + 1}) {link.name}:{" "}
-            <a href={link.link} target="_blank" className="underline ">
-              {link.link.substring(0, 34)}...
-            </a>
+          <div className="flex justify-between" key={link.id}>
+            <div>
+              {index + 1}) {link.name}:{" "}
+              <a href={link.link} target="_blank" className="underline ">
+                {link.link.substring(0, 34)}...
+              </a>
+            </div>
+
+            <button
+              className="text-md text-red-500"
+              onClick={() => deleteLink(link.id)}
+            >
+              Delete
+            </button>
           </div>
         ))}
     </div>

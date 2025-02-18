@@ -62,7 +62,7 @@ export default function TaskDashboardGraph({ tasks }: TaskDashboardGraphProps) {
       <div>
         <Table aria-label="Example static collection table">
           <TableHeader>
-            <TableColumn>NAME</TableColumn>
+            <TableColumn>TASK TYPE</TableColumn>
             <TableColumn>COUNT</TableColumn>
           </TableHeader>
           <TableBody>

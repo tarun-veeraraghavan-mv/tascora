@@ -78,6 +78,22 @@ export async function signOut() {
   redirect("/");
 }
 
+export async function updateUser(formData: FormData) {
+  const username = formData.get("username") as string;
+  const email = formData.get("email") as string;
+  const userId = formData.get("userId") as string;
+
+  await prisma.user.update({
+    where: { id: parseInt(userId) },
+    data: {
+      username,
+      email,
+    },
+  });
+
+  revalidatePath("/main/dashboard");
+}
+
 interface Decoded {
   id: string;
   iat: number;
@@ -414,6 +430,14 @@ export async function viewFiles() {
   return files;
 }
 
+export async function deleteFile(id: number) {
+  await prisma.fileUpload.delete({
+    where: { id },
+  });
+
+  revalidatePath("/main/courses");
+}
+
 // LINKS
 
 export async function uploadLink(formData: FormData) {
@@ -436,6 +460,14 @@ export async function viewLink() {
   const links = await prisma.link.findMany();
 
   return links;
+}
+
+export async function deleteLink(id: number) {
+  await prisma.link.delete({
+    where: { id },
+  });
+
+  revalidatePath("/main/courses");
 }
 
 export async function createContact(formData: FormData) {

@@ -46,7 +46,7 @@ export default function NavHeader({ user }: UserType) {
             Dashboard
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
+        <NavbarItem>
           <Link aria-current="page" color="warning" href="/main/courses">
             Courses
           </Link>
@@ -95,23 +95,4 @@ export default function NavHeader({ user }: UserType) {
       </NavbarMenu>
     </Navbar>
   );
-}
-
-{
-  /* <div className="w-[1200px] mx-auto py-4 px-[32px]">
-      <ul className="flex gap-5 justify-between align-middle">
-        <li>
-          <Link href="/main/dashboard">Dashboard</Link>
-        </li>
-        <li>
-          <Link href="/main/courses">Courses</Link>
-        </li>
-        <li>
-          <Link href="/main/todos">Todos</Link>
-        </li>
-        <li>
-          <UserProfile user={user} />
-        </li>
-      </ul>
-    </div> */
 }
